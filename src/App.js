@@ -1,25 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import Expense from "./Components/Expenses/Expense";
+import NewExpense from "./Components/NewExpense/NewExpense";
 
-function App() {
+const DUMMY_EXPENSES = [
+  {
+    id: "e1",
+    title: "car Insurence",
+    amount: 233.98,
+    date: new Date(2021, 2, 21),
+  },
+  {
+    id: "e2",
+    title: "Bike Insurence",
+    amount: 445.87,
+    date: new Date(2021, 2, 21),
+  },
+  {
+    id: "e3",
+    title: "Health Insurence",
+    amount: 325.87,
+    date: new Date(2021, 4, 21),
+  },
+];
+
+const App = () => {
+  const [expenses, setExpenses] = useState(DUMMY_EXPENSES);
+
+  const addExpenseHandler = (expense) => {
+    // console.log("In App.js");
+    // console.log(expense);
+    setExpenses(prevExpenses =>{
+      return [expense, ...prevExpenses]
+    });
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NewExpense onAddExpenseHandler={addExpenseHandler} />
+      <Expense items={expenses} />
     </div>
   );
-}
 
+  //   return React.createElement(
+  //     "div",
+  //     {},
+  //     React.createElement("h2", {}, "Lets get started"),
+  //     React.createElement(Expense, { items: expense })
+  //   );
+};
 export default App;
